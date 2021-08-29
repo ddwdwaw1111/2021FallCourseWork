@@ -1,4 +1,4 @@
-    :grinning::grinning:
+    :smiley::grinning:
 This is Zihao Wang, computer science major, class of 2022. I have taken all the required courses for computer science major. 
 In addition, I took Software Engineering a year ago and Introduction to Data Science last semester. 
 During Software Engineering, we build a little game demo include picking up staff, using poisons, killing mobs and defeat the boss. 
