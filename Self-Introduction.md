@@ -14,3 +14,4 @@ Also, I am excited about the debugging process during the course.
 After this course, I want to be an expert in debugging which I think is one of the most important skills that a programmer need. 
 
 ![zihao](/IMG-1907.jpg)
+😺
