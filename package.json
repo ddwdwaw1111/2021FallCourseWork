@@ -1,0 +1,17 @@
+{
+    "name": "2021fallhomework",
+    "version": "1.0.0",
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ddwdwaw1111/2021FallHomeWork.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "4.17.1"
+    },
+    "devDependencies": {
+        "nodemon": "2.0.12"
+    }
+}
