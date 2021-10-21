@@ -2,6 +2,7 @@
     "name": "2021fallhomework",
     "version": "1.0.0",
     "scripts": {
+        "start": "node server/index",
         "dev": "nodemon --watch server server/index"
     },
     "repository": {
