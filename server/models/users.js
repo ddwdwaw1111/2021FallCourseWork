@@ -1,3 +1,6 @@
+const bcrypt = require('bcrypt');
+const { result } = require('lodash');
+
 const list = [{
         firstName: 'Moshe',
         lastName: 'Plotkin',
@@ -39,15 +42,31 @@ const list = [{
 ];
 
 module.exports.GetAll = function GetAll() { return list; }
-module.exports.Get = function Get(user_id) { return list[user_id]; }
+
+module.exports.Get = user_id => list[user_id];
+
 module.exports.GetByHandle = function GetByHandle(handle) { return ({...list.find(x => x.handle == handle), password: undefined }); }
 
 module.exports.Add = function Add(user) {
     if (!user.firstName) {
-        throw { code: 422, msg: "First Name is required" }
+        return Promise.reject({ code: 422, msg: "First Name is required" })
     }
-    list.push(user);
-    return {...user, password: undefined };
+
+    return bcrypt.hash(user.password, +process.env.SALT_ROUNDS)
+
+    .then(hash => {
+        console.log({
+            user,
+            salt: process.env.SALT_ROUNDS,
+            hash
+        })
+
+        user.password = hash;
+
+        list.push(user);
+
+        return {...user, password: undefined };
+    });
 }
 
 
@@ -78,13 +97,23 @@ module.exports.Delete = function Delete(user_id) {
 module.exports.Login = function Login(handle, password) {
     console.log({ handle, password })
     const user = list.find(x => x.handle == handle);
-    if (!user) throw { code: 401, msg: "Sorry there is no user with that handle" };
-
-    if (!(password == user.password)) {
-        throw { code: 401, msg: "Wrong Password" };
+    if (!user) {
+        return Promise.reject({ code: 401, msg: "Sorry there is no user with that handle" });
     }
 
-    const data = {...user, password: undefined };
+    return bcrypt.compare(password, user.password)
+        .then(result => {
 
-    return { user: data };
+            if (!result) {
+                throw { code: 401, msg: "Wrong Password" };
+            }
+
+            const data = {...user, password: undefined };
+
+            return { user: data };
+
+        });
+
+
+
 }
